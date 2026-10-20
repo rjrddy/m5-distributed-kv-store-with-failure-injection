@@ -1,0 +1,14 @@
+/Users/rajreddy/dev/outreach/projects/m5-distributed-kv-store-with-failure-injection/.venv/bin/python -m ruff check src tests
+All checks passed!
+/Users/rajreddy/dev/outreach/projects/m5-distributed-kv-store-with-failure-injection/.venv/bin/python -m ruff format --check src tests
+2 files already formatted
+/Users/rajreddy/dev/outreach/projects/m5-distributed-kv-store-with-failure-injection/.venv/bin/python -m pytest -q
+..                                                                       [100%]
+2 passed in 0.09s
+/Users/rajreddy/dev/outreach/projects/m5-distributed-kv-store-with-failure-injection/.venv/bin/python src/main.py > evidence/bench.json
+{
+  "replica_processes": 3,
+  "checked_operations": 6,
+  "fault_scenarios_passed": 3,
+  "seeded_bug_detected": true
+}

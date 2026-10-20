@@ -1,0 +1,27 @@
+{
+  "id": "M5",
+  "name": "Distributed KV store with failure injection",
+  "problem": "Replicated key-value store with a failure-injection test suite (node kill, partition, slow disk) that checks linearizability on small histories.",
+  "results": [
+    [
+      "Replica processes",
+      "replica_processes",
+      ""
+    ],
+    [
+      "History operations checked",
+      "checked_operations",
+      ""
+    ],
+    [
+      "Fault scenarios passed",
+      "fault_scenarios_passed",
+      ""
+    ]
+  ],
+  "diagram": "Client --> FixedCoordinator --> ReplicaProcesses --> QuorumPrepare --> SmallHistoryChecker",
+  "limits": "Three actual child processes hold in-memory replicas. Fixed coordinator serializes client operations; successful writes require two prepare acknowledgements. Tests physically kill one replica and inject transport partition/slow-replica acknowledgements. No leader election, coordinator crash recovery, disk durability, automatic repair, Byzantine tolerance or production consensus guarantee is claimed. Replicas prepare values before coordinator commit; the coordinator is the authoritative read path. Small completed histories are checked exhaustively against single-register semantics; failed operations are excluded because they do not update coordinator state. Checker complexity is factorial. The seeded stale-read history fails in evidence/gate-failure.log.",
+  "next": "Add durable logs, repair, leader election and concurrent histories with timeouts/indeterminate operations.",
+  "status": "done",
+  "command": ".venv/bin/python src/main.py --seed-bug  # expected exit 1"
+}

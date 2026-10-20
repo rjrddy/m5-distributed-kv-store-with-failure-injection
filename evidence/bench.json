@@ -1,0 +1,6 @@
+{
+  "replica_processes": 3,
+  "checked_operations": 6,
+  "fault_scenarios_passed": 3,
+  "seeded_bug_detected": true
+}

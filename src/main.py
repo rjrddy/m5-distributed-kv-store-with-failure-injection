@@ -4,12 +4,13 @@ import argparse
 import itertools
 import json
 import multiprocessing as mp
+from multiprocessing.connection import Connection
 import threading
 import time
 from pathlib import Path
 
 
-def replica(pipe) -> None:
+def replica(pipe: Connection) -> None:
     pipe.send(("ready",))
     prepared = {}
     committed = {}

@@ -4,7 +4,7 @@ All checks passed!
 2 files already formatted
 /Users/rajreddy/dev/outreach/projects/m5-distributed-kv-store-with-failure-injection/.venv/bin/python -m pytest -q
 ..                                                                       [100%]
-2 passed in 0.09s
+2 passed in 0.10s
 /Users/rajreddy/dev/outreach/projects/m5-distributed-kv-store-with-failure-injection/.venv/bin/python src/main.py > evidence/bench.json
 {
   "replica_processes": 3,

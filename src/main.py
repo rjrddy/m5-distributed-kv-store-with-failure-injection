@@ -136,7 +136,9 @@ def benchmark() -> dict:
         assert linearizable(history)
         cluster.nodes[0].terminate()
         cluster.nodes[0].join()
+        start = time.monotonic()
         assert cluster.put("x", 3)
+        buggy = [{"kind": "put", "key": "x", "value": 3, "start": start, "end": time.monotonic()}]
         cluster.blocked = {1}
         assert not cluster.put("x", 99)
         assert cluster.get("x") == 3
@@ -144,8 +146,17 @@ def benchmark() -> dict:
         cluster.slow = {1}
         assert not cluster.put("x", 99)
         assert cluster.get("x") == 3
-        buggy = [dict(r) for r in history]
-        buggy[-1]["value"] = 0
+        start = time.monotonic()
+        actual_buggy_value = cluster.get("x", bug=True)
+        buggy.append(
+            {
+                "kind": "get",
+                "key": "x",
+                "value": actual_buggy_value,
+                "start": start,
+                "end": time.monotonic(),
+            }
+        )
         assert not linearizable(buggy)
         Path("evidence/history.json").write_text(json.dumps(history, indent=2))
         Path("evidence/seeded-bug.json").write_text(json.dumps(buggy, indent=2))
